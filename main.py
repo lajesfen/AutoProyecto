@@ -24,12 +24,18 @@ with open('data.json') as file:
 
 # ------------------------=[JSON: WRITE TO FILE]=------------------------
 
-def writeToFile(car):
-    with open("data.json", 'w') as json_file:
-        objList.append(car.dict())
-        
+def writeToFile():
+    with open("data.json", 'w') as json_file:        
         json.dump(objList, json_file, indent=4)
-        json_file.close()
+
+# ------------------------=[FIND CAR]=------------------------
+
+def findCar(brand, fabrication, color, price):
+    i = 0
+    while i < len(objList):  
+        if objList[i]['brand'] == brand and objList[i]['fabrication'] == fabrication and objList[i]['color'] == color and objList[i]['price'] == price:
+            return objList[i]
+        i += 1
 
 # ------------------------=[SEND MAIN MENU]=------------------------
 
@@ -52,7 +58,8 @@ def sendCarRegistry():
     price = input("Precio (S/.): ")
 
     car = Car(brand, fabrication, color, price)
-    writeToFile(car)
+    objList.append(car.dict())
+    writeToFile()
 
 # ------------------------=[SEND CAR LIST]=------------------------
 
@@ -65,7 +72,16 @@ def sendCarList():
 
 def sendBuyCar():
     click.clear()
-    pass
+    print('       COMPRAR AUTO')
+    brand = input("Marca: ")
+    fabrication = input("Fecha de Fabricación: ")
+    color = input("Color: ")
+    price = input("Precio (S/.): ")
+    
+    car = findCar(brand, fabrication, color, price)
+    if(car):
+        car['available'] = "Vendido"
+    writeToFile()
 
 # ------------------------=[INIT]=------------------------
 
