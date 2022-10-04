@@ -1,6 +1,7 @@
 ToDo List:
 
-- [ ] Comprar carro ("Disponible" -- "No Disponible")
+- [X] Comprar carro ("Disponible" -- "No Disponible")
+- [ ] Tablas (Comprar carro, lista de carros)
 - [ ] Lista de carros disponibles
 - [ ] JSON validation
 - [ ] Input validation

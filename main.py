@@ -7,9 +7,9 @@ objList = []
 # ------------------------=[CAR CLASS]=------------------------
 
 class Car:
-    def __init__(self, brand, fabrication, color, price):
+    def __init__(self, brand, year, color, price):
         self.brand = brand
-        self.fabrication = fabrication
+        self.year = year
         self.color = color
         self.price = price
         self.available = "Disponible"
@@ -19,21 +19,21 @@ class Car:
 
 # ------------------------=[JSON: LOAD DATA]=------------------------
 
-with open('data.json') as file:
+with open('data/data.json') as file:
     objList = json.load(file)
 
 # ------------------------=[JSON: WRITE TO FILE]=------------------------
 
 def writeToFile():
-    with open("data.json", 'w') as json_file:        
-        json.dump(objList, json_file, indent=4)
+    with open("data/data.json", 'w') as file:        
+        json.dump(objList, file, indent=4)
 
 # ------------------------=[FIND CAR]=------------------------
 
-def findCar(brand, fabrication, color, price):
+def findCar(brand, year, color, price):
     i = 0
     while i < len(objList):  
-        if objList[i]['brand'] == brand and objList[i]['fabrication'] == fabrication and objList[i]['color'] == color and objList[i]['price'] == price:
+        if objList[i]['brand'] == brand and objList[i]['year'] == year and objList[i]['color'] == color and objList[i]['price'] == price:
             return objList[i]
         i += 1
 
@@ -53,13 +53,14 @@ def sendCarRegistry():
     click.clear()
     print('       REGISTRAR AUTO')
     brand = input("Marca: ")
-    fabrication = input("Fecha de Fabricación: ")
+    year = input("Fecha de Fabricación: ")
     color = input("Color: ")
     price = input("Precio (S/.): ")
 
-    car = Car(brand, fabrication, color, price)
+    car = Car(brand, year, color, price)
     objList.append(car.dict())
     writeToFile()
+    sendCarList()
 
 # ------------------------=[SEND CAR LIST]=------------------------
 
@@ -74,11 +75,11 @@ def sendBuyCar():
     click.clear()
     print('       COMPRAR AUTO')
     brand = input("Marca: ")
-    fabrication = input("Fecha de Fabricación: ")
+    year = input("Fecha de Fabricación: ")
     color = input("Color: ")
     price = input("Precio (S/.): ")
     
-    car = findCar(brand, fabrication, color, price)
+    car = findCar(brand, year, color, price)
     if(car):
         car['available'] = "Vendido"
     writeToFile()
