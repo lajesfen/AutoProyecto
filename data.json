@@ -1,0 +1,30 @@
+[
+    {
+        "brand": "Mustang",
+        "fabrication": "1998",
+        "color": "Morado",
+        "price": "4500",
+        "available": "Disponible"
+    },
+    {
+        "brand": "Audi",
+        "fabrication": "2030",
+        "color": "Rojo",
+        "price": "5400",
+        "available": "Disponible"
+    },
+    {
+        "brand": "Audi",
+        "fabrication": "2030",
+        "color": "Rojo",
+        "price": "5400",
+        "available": "Disponible"
+    },
+    {
+        "brand": "Jeep",
+        "fabrication": "1998",
+        "color": "Amarillo",
+        "price": "3400",
+        "available": "Disponible"
+    }
+]
