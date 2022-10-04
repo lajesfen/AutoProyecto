@@ -1,6 +1,3 @@
-# TODO:
-#   -
-
 from pick import pick
 import click
 import json
