@@ -1,4 +1,5 @@
 from pick import pick
+from tabulate import tabulate
 import click
 import json
 
@@ -41,8 +42,7 @@ def findCar(brand, year, color, price):
 
 def sendMainMenu():
     title = '       VENTA AUTOS'
-    options = ['Registro de Automóvil',
-               'Ver Automóviles Disponibles', 'Comprar Automóvil']
+    options = ['Registro de Automóvil', 'Ver Automóviles Disponibles', 'Comprar Automóvil']
     selected, index = pick(options, title, indicator='=>')
 
     return index
@@ -55,7 +55,7 @@ def sendCarRegistry():
     brand = input("Marca: ")
     year = input("Fecha de Fabricación: ")
     color = input("Color: ")
-    price = input("Precio (S/.): ")
+    price = input("Precio (s/.): ")
 
     car = Car(brand, year, color, price)
     objList.append(car.dict())
@@ -66,8 +66,8 @@ def sendCarRegistry():
 
 def sendCarList():
     click.clear()
-    print(objList[0])
-    pass
+    table = tabulate(objList, headers={"brand": "Marca", "year": "Año de Fabric.", "color": "Color", "price": "Precio", "available": "Disponible"}, tablefmt='fancy_grid', showindex=range(1, len(objList)+1))
+    print(table)
 
 # ------------------------=[SEND BUY CAR]=------------------------
 
@@ -77,7 +77,7 @@ def sendBuyCar():
     brand = input("Marca: ")
     year = input("Fecha de Fabricación: ")
     color = input("Color: ")
-    price = input("Precio (S/.): ")
+    price = input("Precio (s/.): ")
     
     car = findCar(brand, year, color, price)
     if(car):

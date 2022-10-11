@@ -1,30 +1,16 @@
 [
     {
-        "brand": "Mustang",
+        "brand": "Honda",
         "year": "1998",
-        "color": "Morado",
+        "color": "Rojo",
         "price": "4500",
         "available": "Disponible"
     },
     {
-        "brand": "Audi",
-        "year": "2030",
-        "color": "Rojo",
-        "price": "5400",
-        "available": "Disponible"
-    },
-    {
-        "brand": "Audi",
-        "year": "2030",
-        "color": "Rojo",
-        "price": "5400",
-        "available": "Disponible"
-    },
-    {
-        "brand": "Jeep",
-        "year": "1998",
-        "color": "Amarillo",
-        "price": "3400",
+        "brand": "Toyota",
+        "year": "2004",
+        "color": "Azul",
+        "price": "1200",
         "available": "Disponible"
     }
 ]
