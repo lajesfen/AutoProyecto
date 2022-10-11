@@ -38,6 +38,20 @@ def findCar(brand, year, color, price):
             return objList[i]
         i += 1
 
+# ------------------------=[ADD RETURN BUTTON]=------------------------
+       
+def addReturn():
+    button = input("Presiona ENTER para volver.")
+    if button == '':
+        init()
+
+# ------------------------=[ADD CAR LIST]=------------------------
+
+def addCarList():
+    click.clear()
+    print('                 ▄▀▄▀▄▀ AUTOS DISPONIBLES ▀▄▀▄▀▄')
+    print(tabulate(objList, headers={"brand": "Marca", "year": "Año de Fabric.", "color": "Color", "price": "Precio", "available": "Disponible"}, tablefmt='fancy_grid', showindex=range(1, len(objList)+1)))
+    
 # ------------------------=[SEND MAIN MENU]=------------------------
 
 def sendMainMenu():
@@ -60,21 +74,20 @@ def sendCarRegistry():
     car = Car(brand, year, color, price)
     objList.append(car.dict())
     writeToFile()
-    sendCarList()
+    addCarList()
+    addReturn()
 
 # ------------------------=[SEND CAR LIST]=------------------------
 
 def sendCarList():
-    click.clear()
-    table = tabulate(objList, headers={"brand": "Marca", "year": "Año de Fabric.", "color": "Color", "price": "Precio", "available": "Disponible"}, tablefmt='fancy_grid', showindex=range(1, len(objList)+1))
-    print('                 ▄▀▄▀▄▀ AUTOS DISPONIBLES ▀▄▀▄▀▄')
-    print(table)
+    addCarList()
+    addReturn()
     
 # ------------------------=[SEND BUY CAR]=------------------------
 
 def sendBuyCar():
     click.clear()
-    sendCarList()
+    addCarList()
     print('\n                 ▄▀▄▀▄▀ COMPRAR AUTO ▀▄▀▄▀▄')
     brand = input("Marca: ")
     year = input("Fecha de Fabricación: ")
@@ -85,8 +98,8 @@ def sendBuyCar():
     if(car):
         car['available'] = "Vendido"
     writeToFile()
-    click.clear()
-    sendCarList()
+    addCarList()
+    addReturn()
 
 # ------------------------=[INIT]=------------------------
 
