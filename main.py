@@ -41,7 +41,7 @@ def findCar(brand, year, color, price):
 # ------------------------=[SEND MAIN MENU]=------------------------
 
 def sendMainMenu():
-    title = '       VENTA AUTOS'
+    title = '                 ▄▀▄▀▄▀ VENTA AUTOS ▀▄▀▄▀▄'
     options = ['Registro de Automóvil', 'Ver Automóviles Disponibles', 'Comprar Automóvil']
     selected, index = pick(options, title, indicator='=>')
 
@@ -51,7 +51,7 @@ def sendMainMenu():
 
 def sendCarRegistry():
     click.clear()
-    print('       REGISTRAR AUTO')
+    print('                 ▄▀▄▀▄▀ REGISTRAR AUTO ▀▄▀▄▀▄')
     brand = input("Marca: ")
     year = input("Fecha de Fabricación: ")
     color = input("Color: ")
@@ -67,13 +67,15 @@ def sendCarRegistry():
 def sendCarList():
     click.clear()
     table = tabulate(objList, headers={"brand": "Marca", "year": "Año de Fabric.", "color": "Color", "price": "Precio", "available": "Disponible"}, tablefmt='fancy_grid', showindex=range(1, len(objList)+1))
+    print('                 ▄▀▄▀▄▀ AUTOS DISPONIBLES ▀▄▀▄▀▄')
     print(table)
-
+    
 # ------------------------=[SEND BUY CAR]=------------------------
 
 def sendBuyCar():
     click.clear()
-    print('       COMPRAR AUTO')
+    sendCarList()
+    print('\n                 ▄▀▄▀▄▀ COMPRAR AUTO ▀▄▀▄▀▄')
     brand = input("Marca: ")
     year = input("Fecha de Fabricación: ")
     color = input("Color: ")
@@ -83,6 +85,8 @@ def sendBuyCar():
     if(car):
         car['available'] = "Vendido"
     writeToFile()
+    click.clear()
+    sendCarList()
 
 # ------------------------=[INIT]=------------------------
 

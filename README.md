@@ -1,8 +1,8 @@
 ToDo List:
 
 - [X] Comprar carro ("Disponible" -- "No Disponible")
-- [ ] Tablas (Comprar carro, lista de carros)
-- [ ] Lista de carros disponibles
+- [X] Tablas (Comprar carro, lista de carros)
+- [X] Lista de carros disponibles
 - [ ] JSON validation
 - [ ] Input validation
 - [ ] Cmd a GUI

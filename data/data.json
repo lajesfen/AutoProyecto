@@ -5,12 +5,5 @@
         "color": "Rojo",
         "price": "4500",
         "available": "Disponible"
-    },
-    {
-        "brand": "Toyota",
-        "year": "2004",
-        "color": "Azul",
-        "price": "1200",
-        "available": "Disponible"
     }
 ]
