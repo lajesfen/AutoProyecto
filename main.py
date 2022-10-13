@@ -80,6 +80,10 @@ def sendCarRegistry():
 # ------------------------=[SEND CAR LIST]=------------------------
 
 def sendCarList():
+    for i in objList:
+        if i['available'] == "Vendido":
+            objList.pop(objList.index(i))
+    writeToFile()
     addCarList()
     addReturn()
     
