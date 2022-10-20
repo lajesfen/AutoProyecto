@@ -1,16 +1,16 @@
 [
     {
-        "brand": "Toyota",
+        "brand": "Audi",
         "year": "2000",
-        "color": "Verde",
-        "price": "1020",
+        "color": "Negro",
+        "price": "1230",
         "available": "Disponible"
     },
     {
         "brand": "BMV",
         "year": "2010",
-        "color": "Moraverde",
-        "price": "2050",
+        "color": "Rojo",
+        "price": "3210",
         "available": "Disponible"
     }
 ]

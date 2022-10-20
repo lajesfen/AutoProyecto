@@ -1,3 +1,4 @@
+from xmlrpc.client import Boolean
 from pick import pick
 from tabulate import tabulate
 import click
@@ -25,7 +26,7 @@ with open('data/data.json') as file:
 
 # ------------------------=[JSON: WRITE TO FILE]=------------------------
 
-def writeToFile():
+def saveToFile():
     with open("data/data.json", 'w') as file:        
         json.dump(objList, file, indent=4)
 
@@ -45,13 +46,6 @@ def addReturn():
     if button == '':
         init()
 
-# ------------------------=[ADD CAR LIST]=------------------------
-
-def addCarList():
-    click.clear()
-    print('                 ▄▀▄▀▄▀ AUTOS DISPONIBLES ▀▄▀▄▀▄')
-    print(tabulate(objList, headers={"brand": "Marca", "year": "Año de Fabric.", "color": "Color", "price": "Precio", "available": "Disponible"}, tablefmt='fancy_grid', showindex=range(1, len(objList)+1)))
-    
 # ------------------------=[SEND MAIN MENU]=------------------------
 
 def sendMainMenu():
@@ -73,25 +67,29 @@ def sendCarRegistry():
 
     car = Car(brand, year, color, price)
     objList.append(car.dict())
-    writeToFile()
-    addCarList()
-    addReturn()
+    saveToFile()
+    sendCarList(False)
 
 # ------------------------=[SEND CAR LIST]=------------------------
 
-def sendCarList():
-    for i in objList:
-        if i['available'] == "Vendido":
-            objList.pop(objList.index(i))
-    writeToFile()
-    addCarList()
+def sendCarList(delete: Boolean):
+    print('                 ▄▀▄▀▄▀ AUTOS DISPONIBLES ▀▄▀▄▀▄')
+    print(tabulate(objList, headers={"brand": "Marca", "year": "Año de Fabric.", "color": "Color", "price": "Precio", "available": "Disponible"}, tablefmt='fancy_grid', showindex=range(1, len(objList)+1)))
+    
+    if delete:   
+        for i in objList:
+            if i['available'] == "Vendido":
+                objList.pop(objList.index(i))
+        saveToFile()
     addReturn()
     
 # ------------------------=[SEND BUY CAR]=------------------------
 
 def sendBuyCar():
     click.clear()
-    addCarList()
+    print('                 ▄▀▄▀▄▀ AUTOS DISPONIBLES ▀▄▀▄▀▄')
+    print(tabulate(objList, headers={"brand": "Marca", "year": "Año de Fabric.", "color": "Color", "price": "Precio", "available": "Disponible"}, tablefmt='fancy_grid', showindex=range(1, len(objList)+1)))
+    
     print('\n                 ▄▀▄▀▄▀ COMPRAR AUTO ▀▄▀▄▀▄')
     brand = input("Marca: ")
     year = input("Fecha de Fabricación: ")
@@ -101,9 +99,7 @@ def sendBuyCar():
     car = findCar(brand, year, color, price)
     if(car):
         car['available'] = "Vendido"
-    writeToFile()
-    addCarList()
-    addReturn()
+    sendCarList(True)
 
 # ------------------------=[INIT]=------------------------
 
@@ -114,7 +110,7 @@ def init():
         case 0:
             sendCarRegistry()
         case 1:
-            sendCarList()
+            sendCarList(False)
         case 2:
             sendBuyCar()
 
