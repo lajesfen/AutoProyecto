@@ -1,7 +1,4 @@
-from xmlrpc.client import Boolean
-from pick import pick
 from tabulate import tabulate
-import click
 import json
 
 objList = []
@@ -46,20 +43,10 @@ def addReturn():
     if button == '':
         init()
 
-# ------------------------=[SEND MAIN MENU]=------------------------
-
-def sendMainMenu():
-    title = '                 ▄▀▄▀▄▀ VENTA AUTOS ▀▄▀▄▀▄'
-    options = ['Registro de Automóvil', 'Ver Automóviles Disponibles', 'Comprar Automóvil']
-    selected, index = pick(options, title, indicator='=>')
-
-    return index
-
 # ------------------------=[SEND CAR REGISTRY]=------------------------
 
 def sendCarRegistry():
-    click.clear()
-    print('                 ▄▀▄▀▄▀ REGISTRAR AUTO ▀▄▀▄▀▄')
+    print('\n                 ▄▀▄▀▄▀ REGISTRAR AUTO ▀▄▀▄▀▄')
     brand = input("Marca: ")
     year = input("Fecha de Fabricación: ")
     color = input("Color: ")
@@ -72,8 +59,8 @@ def sendCarRegistry():
 
 # ------------------------=[SEND CAR LIST]=------------------------
 
-def sendCarList(delete: Boolean):
-    print('                 ▄▀▄▀▄▀ AUTOS DISPONIBLES ▀▄▀▄▀▄')
+def sendCarList(delete: bool):
+    print('\n                 ▄▀▄▀▄▀ AUTOS DISPONIBLES ▀▄▀▄▀▄')
     print(tabulate(objList, headers={"brand": "Marca", "year": "Año de Fabric.", "color": "Color", "price": "Precio", "available": "Disponible"}, tablefmt='fancy_grid', showindex=range(1, len(objList)+1)))
     
     if delete:   
@@ -86,8 +73,7 @@ def sendCarList(delete: Boolean):
 # ------------------------=[SEND BUY CAR]=------------------------
 
 def sendBuyCar():
-    click.clear()
-    print('                 ▄▀▄▀▄▀ AUTOS DISPONIBLES ▀▄▀▄▀▄')
+    print('\n                 ▄▀▄▀▄▀ AUTOS DISPONIBLES ▀▄▀▄▀▄')
     print(tabulate(objList, headers={"brand": "Marca", "year": "Año de Fabric.", "color": "Color", "price": "Precio", "available": "Disponible"}, tablefmt='fancy_grid', showindex=range(1, len(objList)+1)))
     
     print('\n                 ▄▀▄▀▄▀ COMPRAR AUTO ▀▄▀▄▀▄')
@@ -104,14 +90,16 @@ def sendBuyCar():
 # ------------------------=[INIT]=------------------------
 
 def init():
-    menuSelection = sendMainMenu()
+    print('\n                 ▄▀▄▀▄▀ VENTA AUTOS ▀▄▀▄▀▄')
+    print('\n1. Registro de Automóvil\n2. Ver Automóviles Disponibles\n3. Comprar Automóvil')
+    index = int(input("\nSelecciona [1, 2, 3]: "))
 
-    match menuSelection:
-        case 0:
-            sendCarRegistry()
+    match index:
         case 1:
-            sendCarList(False)
+            sendCarRegistry()
         case 2:
+            sendCarList(False)
+        case 3:
             sendBuyCar()
 
 init()
