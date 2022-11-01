@@ -6,7 +6,7 @@ objList = []
 # ------------------------=[CAR CLASS]=------------------------
 
 class Car:
-    def __init__(self, brand, year, color, price):
+    def __init__(self, brand, year: int, color, price: int):
         self.brand = brand
         self.year = year
         self.color = color
@@ -29,9 +29,12 @@ def saveToFile():
 
 # ------------------------=[FIND CAR]=------------------------
 
-def findCar(brand, year, color, price):
+def findCar(brand, year: int, color, price: int):
     i = 0
-    while i < len(objList):  
+    while i < len(objList):
+        if objList[i]['brand'] != brand or objList[i]['year'] != year or objList[i]['color'] != color or objList[i]['price'] != price:
+            return False
+        
         if objList[i]['brand'] == brand and objList[i]['year'] == year and objList[i]['color'] == color and objList[i]['price'] == price:
             return objList[i]
         i += 1
@@ -48,14 +51,20 @@ def addReturn():
 def sendCarRegistry():
     print('\n                 ▄▀▄▀▄▀ REGISTRAR AUTO ▀▄▀▄▀▄')
     brand = input("Marca: ")
-    year = input("Fecha de Fabricación: ")
+    year = int(input("Fecha de Fabricación: "))
     color = input("Color: ")
-    price = input("Precio (s/.): ")
+    price = int(input("Precio (s/.): "))
 
-    car = Car(brand, year, color, price)
-    objList.append(car.dict())
-    saveToFile()
-    sendCarList(False)
+    while True:
+        if price >= 0:
+            car = Car(brand, year, color, price)
+            objList.append(car.dict())
+            saveToFile()
+            sendCarList(False)
+            break
+        else:
+            price = int(input("Precio (s/.): "))
+
 
 # ------------------------=[SEND CAR LIST]=------------------------
 
@@ -78,21 +87,37 @@ def sendBuyCar():
     
     print('\n                 ▄▀▄▀▄▀ COMPRAR AUTO ▀▄▀▄▀▄')
     brand = input("Marca: ")
-    year = input("Fecha de Fabricación: ")
+    year = int(input("Fecha de Fabricación: "))
     color = input("Color: ")
-    price = input("Precio (s/.): ")
+    price = int(input("Precio (s/.): "))
     
     car = findCar(brand, year, color, price)
-    if(car):
-        car['available'] = "Vendido"
-    sendCarList(True)
+    while True:
+        if(car):
+            car['available'] = "Vendido"
+            sendCarList(True)
+            break
+        else:
+            print('\n                 ▄▀▄▀▄▀ COMPRAR AUTO ▀▄▀▄▀▄')
+            brand = input("Marca: ")
+            year = int(input("Fecha de Fabricación: "))
+            color = input("Color: ")
+            price = int(input("Precio (s/.): "))
+            
+            car = findCar(brand, year, color, price)
 
 # ------------------------=[INIT]=------------------------
 
 def init():
     print('\n                 ▄▀▄▀▄▀ VENTA AUTOS ▀▄▀▄▀▄')
     print('\n1. Registro de Automóvil\n2. Ver Automóviles Disponibles\n3. Comprar Automóvil')
+    
     index = int(input("\nSelecciona [1, 2, 3]: "))
+    while True:
+        if index not in [1, 2, 3]:
+            index = int(input("\nSelecciona [1, 2, 3]: "))
+        else:
+            break
 
     match index:
         case 1:

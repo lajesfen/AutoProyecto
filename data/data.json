@@ -1,16 +1,23 @@
 [
     {
-        "brand": "Audi",
-        "year": "2000",
-        "color": "Negro",
-        "price": "1230",
+        "brand": "BMV",
+        "year": 2010,
+        "color": "Rojo",
+        "price": 3210,
         "available": "Disponible"
     },
     {
-        "brand": "BMV",
-        "year": "2010",
-        "color": "Rojo",
-        "price": "3210",
+        "brand": "Audi",
+        "year": 2000,
+        "color": "Negro",
+        "price": 1230,
+        "available": "Disponible"
+    },
+    {
+        "brand": "Jeep",
+        "year": 2010,
+        "color": "Verde",
+        "price": 1230,
         "available": "Disponible"
     }
 ]
