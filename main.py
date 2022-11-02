@@ -3,18 +3,10 @@ import json
 
 objList = []
 
-# ------------------------=[CAR CLASS]=------------------------
+# ------------------------=[CAR DEFINITION]=------------------------
 
-class Car:
-    def __init__(self, brand, year: int, color, price: int):
-        self.brand = brand
-        self.year = year
-        self.color = color
-        self.price = price
-        self.available = "Disponible"
-
-    def dict(self):
-        return self.__dict__
+def car(brand, year: int, color, price: int):
+        return {'brand': brand, 'year': year, 'color': color, 'price': price, 'available': "Disponible"}
 
 # ------------------------=[JSON: LOAD DATA]=------------------------
 
@@ -30,14 +22,12 @@ def saveToFile():
 # ------------------------=[FIND CAR]=------------------------
 
 def findCar(brand, year: int, color, price: int):
-    i = 0
-    while i < len(objList):
-        if objList[i]['brand'] != brand or objList[i]['year'] != year or objList[i]['color'] != color or objList[i]['price'] != price:
-            return False
-        
-        if objList[i]['brand'] == brand and objList[i]['year'] == year and objList[i]['color'] == color and objList[i]['price'] == price:
-            return objList[i]
-        i += 1
+    for i in objList:       
+        if i['brand'] == brand and i['year'] == year and i['color'] == color and i['price'] == price:
+            return i
+        else:
+            continue
+    return False
 
 # ------------------------=[ADD RETURN BUTTON]=------------------------
        
@@ -57,14 +47,13 @@ def sendCarRegistry():
 
     while True:
         if price >= 0:
-            car = Car(brand, year, color, price)
-            objList.append(car.dict())
+            newCar = car(brand, year, color, price)
+            objList.append(newCar)
             saveToFile()
             sendCarList(False)
             break
         else:
             price = int(input("Precio (s/.): "))
-
 
 # ------------------------=[SEND CAR LIST]=------------------------
 
