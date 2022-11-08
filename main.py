@@ -3,15 +3,13 @@ import json
 
 objList = []
 
+with open('data/data.json') as file:
+    objList = json.load(file)
+    
 # ------------------------=[CAR DEFINITION]=------------------------
 
 def car(brand, year: int, color, price: int):
         return {'brand': brand, 'year': year, 'color': color, 'price': price, 'available': "Disponible"}
-
-# ------------------------=[JSON: LOAD DATA]=------------------------
-
-with open('data/data.json') as file:
-    objList = json.load(file)
 
 # ------------------------=[JSON: WRITE TO FILE]=------------------------
 
