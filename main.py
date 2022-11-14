@@ -1,61 +1,69 @@
-from tabulate import tabulate
 import json
+import os
+
+from pick import pick
+from tabulate import tabulate
 
 objList = []
 
-with open('data/data.json') as file:
-    objList = json.load(file)
-    
-# ------------------------=[CAR DEFINITION]=------------------------
+class Car:
+    def __init__(self, brand: str, year: int, color: str, price: int):
+        self.brand = brand
+        self.year = year
+        self.color = color
+        self.price = price
+        self.available = "Disponible"
 
-def car(brand, year: int, color, price: int):
-        return {'brand': brand, 'year': year, 'color': color, 'price': price, 'available': "Disponible"}
-
-# ------------------------=[JSON: WRITE TO FILE]=------------------------
-
-def saveToFile():
-    with open("data/data.json", 'w') as file:        
+if os.path.exists('./data/data.json'):
+    with open('data/data.json') as file:
+        objList = json.load(file)
+else:
+    with open("data/data.json", 'w') as file:
         json.dump(objList, file, indent=4)
 
-# ------------------------=[FIND CAR]=------------------------
+# ------------------------=[UTILS]=------------------------
 
-def findCar(brand, year: int, color, price: int):
+def saveToFile():
+    with open("data/data.json", 'w') as file:
+        json.dump(objList, file, indent=4)
+
+def findCar(brand: str, year: int, color: str, price: int):
     for i in objList:       
         if i['brand'] == brand and i['year'] == year and i['color'] == color and i['price'] == price:
             return i
         else:
             continue
     return False
-
-# ------------------------=[ADD RETURN BUTTON]=------------------------
        
 def addReturn():
     button = input("Presiona ENTER para volver.")
     if button == '':
+        os.system('cls')
         init()
 
-# ------------------------=[SEND CAR REGISTRY]=------------------------
+# ------------------------=[MAIN FUNCTIONS]=------------------------
 
 def sendCarRegistry():
+    os.system('cls')
     print('\n                 ▄▀▄▀▄▀ REGISTRAR AUTO ▀▄▀▄▀▄')
-    brand = input("Marca: ")
+    brand = str(input("Marca: "))
     year = int(input("Fecha de Fabricación: "))
-    color = input("Color: ")
+    color = str(input("Color: "))
     price = int(input("Precio (s/.): "))
 
     while True:
         if price >= 0:
-            newCar = car(brand, year, color, price)
-            objList.append(newCar)
+            newCar = Car(brand, year, color, price)
+            objList.append(newCar.__dict__)
             saveToFile()
             sendCarList(False)
             break
         else:
             price = int(input("Precio (s/.): "))
 
-# ------------------------=[SEND CAR LIST]=------------------------
 
 def sendCarList(delete: bool):
+    os.system('cls')
     print('\n                 ▄▀▄▀▄▀ AUTOS DISPONIBLES ▀▄▀▄▀▄')
     print(tabulate(objList, headers={"brand": "Marca", "year": "Año de Fabric.", "color": "Color", "price": "Precio", "available": "Disponible"}, tablefmt='fancy_grid', showindex=range(1, len(objList)+1)))
     
@@ -65,17 +73,16 @@ def sendCarList(delete: bool):
                 objList.pop(objList.index(i))
         saveToFile()
     addReturn()
-    
-# ------------------------=[SEND BUY CAR]=------------------------
+
 
 def sendBuyCar():
     print('\n                 ▄▀▄▀▄▀ AUTOS DISPONIBLES ▀▄▀▄▀▄')
     print(tabulate(objList, headers={"brand": "Marca", "year": "Año de Fabric.", "color": "Color", "price": "Precio", "available": "Disponible"}, tablefmt='fancy_grid', showindex=range(1, len(objList)+1)))
     
     print('\n                 ▄▀▄▀▄▀ COMPRAR AUTO ▀▄▀▄▀▄')
-    brand = input("Marca: ")
+    brand = str(input("Marca: "))
     year = int(input("Fecha de Fabricación: "))
-    color = input("Color: ")
+    color = str(input("Color: "))
     price = int(input("Precio (s/.): "))
     
     car = findCar(brand, year, color, price)
@@ -86,32 +93,31 @@ def sendBuyCar():
             break
         else:
             print('\n                 ▄▀▄▀▄▀ COMPRAR AUTO ▀▄▀▄▀▄')
-            brand = input("Marca: ")
+            brand = str(input("Marca: "))
             year = int(input("Fecha de Fabricación: "))
-            color = input("Color: ")
+            color = str(input("Color: "))
             price = int(input("Precio (s/.): "))
             
             car = findCar(brand, year, color, price)
 
-# ------------------------=[INIT]=------------------------
+
+def sendMainMenu():
+    title = '                 ▄▀▄▀▄▀ VENTA AUTOS ▀▄▀▄▀▄'
+    options = ['Registro de Automóvil', 'Ver Automóviles Disponibles', 'Comprar Automóvil']
+    selected, index = pick(options=options, title=title, indicator='=>')
+
+    return index
+
+# ------------------------=[START]=------------------------
 
 def init():
-    print('\n                 ▄▀▄▀▄▀ VENTA AUTOS ▀▄▀▄▀▄')
-    print('\n1. Registro de Automóvil\n2. Ver Automóviles Disponibles\n3. Comprar Automóvil')
-    
-    index = int(input("\nSelecciona [1, 2, 3]: "))
-    while True:
-        if index not in [1, 2, 3]:
-            index = int(input("\nSelecciona [1, 2, 3]: "))
-        else:
-            break
+    menuSelection = sendMainMenu()
 
-    match index:
-        case 1:
+    match menuSelection:
+        case 0:
             sendCarRegistry()
-        case 2:
+        case 1:
             sendCarList(False)
-        case 3:
+        case 2:
             sendBuyCar()
-
 init()

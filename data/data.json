@@ -1,16 +1,16 @@
 [
     {
-        "brand": "Audi",
-        "year": 2000,
-        "color": "Azul",
-        "price": 1420,
-        "available": "Disponible"
-    },
-    {
         "brand": "Jeep",
         "year": 2010,
         "color": "Negro",
         "price": 4210,
+        "available": "Disponible"
+    },
+    {
+        "brand": "BMW",
+        "year": 2010,
+        "color": "Morado",
+        "price": 12300,
         "available": "Disponible"
     }
 ]
