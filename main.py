@@ -4,7 +4,9 @@ import os
 from pick import pick
 from tabulate import tabulate
 
-objList = []
+carList = []
+soldList = []
+moneyTotal = 0
 
 class Car:
     def __init__(self, brand: str, year: int, color: str, price: int):
@@ -16,24 +18,35 @@ class Car:
 
 if os.path.exists('./data/data.json'):
     with open('data/data.json') as file:
-        objList = json.load(file)
+        carList = json.load(file)
 else:
     with open("data/data.json", 'w') as file:
-        json.dump(objList, file, indent=4)
+        json.dump(carList, file, indent=4)
+
+
+if os.path.exists('./data/sold.json'):
+    with open('data/sold.json') as file:
+        soldList = json.load(file)
+else:
+    with open("data/sold.json", 'w') as file:
+        json.dump(soldList, file, indent=4)
 
 # ------------------------=[UTILS]=------------------------
 
-def saveToFile():
+def saveToFile(): #TODO: Agregar Save por órden alfabético.
     with open("data/data.json", 'w') as file:
-        json.dump(objList, file, indent=4)
+        json.dump(carList, file, indent=4)
 
 def findCar(brand: str, year: int, color: str, price: int):
-    for i in objList:       
+    for i in carList:       
         if i['brand'] == brand and i['year'] == year and i['color'] == color and i['price'] == price:
             return i
         else:
             continue
     return False
+
+def buyCar(car): #TODO: Función Buy Car: Prices a moneyTotal y carros vendidos a soldList.
+    return
        
 def addReturn():
     button = input("Presiona ENTER para volver.")
@@ -54,7 +67,7 @@ def sendCarRegistry():
     while True:
         if price >= 0:
             newCar = Car(brand, year, color, price)
-            objList.append(newCar.__dict__)
+            carList.append(newCar.__dict__)
             saveToFile()
             sendCarList(False)
             break
@@ -65,19 +78,19 @@ def sendCarRegistry():
 def sendCarList(delete: bool):
     os.system('cls')
     print('\n                 ▄▀▄▀▄▀ AUTOS DISPONIBLES ▀▄▀▄▀▄')
-    print(tabulate(objList, headers={"brand": "Marca", "year": "Año de Fabric.", "color": "Color", "price": "Precio", "available": "Disponible"}, tablefmt='fancy_grid', showindex=range(1, len(objList)+1)))
+    print(tabulate(carList, headers={"brand": "Marca", "year": "Año de Fabric.", "color": "Color", "price": "Precio", "available": "Disponible"}, tablefmt='fancy_grid', showindex=range(1, len(carList)+1)))
     
     if delete:   
-        for i in objList:
+        for i in carList:
             if i['available'] == "Vendido":
-                objList.pop(objList.index(i))
+                carList.pop(carList.index(i))
         saveToFile()
     addReturn()
 
 
 def sendBuyCar():
     print('\n                 ▄▀▄▀▄▀ AUTOS DISPONIBLES ▀▄▀▄▀▄')
-    print(tabulate(objList, headers={"brand": "Marca", "year": "Año de Fabric.", "color": "Color", "price": "Precio", "available": "Disponible"}, tablefmt='fancy_grid', showindex=range(1, len(objList)+1)))
+    print(tabulate(carList, headers={"brand": "Marca", "year": "Año de Fabric.", "color": "Color", "price": "Precio", "available": "Disponible"}, tablefmt='fancy_grid', showindex=range(1, len(carList)+1)))
     
     print('\n                 ▄▀▄▀▄▀ COMPRAR AUTO ▀▄▀▄▀▄')
     brand = str(input("Marca: "))
@@ -87,7 +100,7 @@ def sendBuyCar():
     
     car = findCar(brand, year, color, price)
     while True:
-        if(car):
+        if(car): #TODO: Función Buy Car: Prices a moneyTotal y carros vendidos a soldList.
             car['available'] = "Vendido"
             sendCarList(True)
             break
@@ -100,15 +113,20 @@ def sendBuyCar():
             
             car = findCar(brand, year, color, price)
 
+def sendSoldList(): #TODO
+    return
+
+def sendMoneyTotal(): #TODO
+    return
 
 def sendMainMenu():
     title = '                 ▄▀▄▀▄▀ VENTA AUTOS ▀▄▀▄▀▄'
-    options = ['Registro de Automóvil', 'Ver Automóviles Disponibles', 'Comprar Automóvil']
+    options = ['Registro de Automóvil', 'Ver Automóviles Disponibles', 'Comprar Automóvil', 'Ver Automóviles Vendidos', 'Cantidad de S/.']
     selected, index = pick(options=options, title=title, indicator='=>')
 
     return index
 
-# ------------------------=[START]=------------------------
+# ------------------------=[INIT]=------------------------
 
 def init():
     menuSelection = sendMainMenu()
