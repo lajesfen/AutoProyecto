@@ -1,7 +1,6 @@
 import json
 import os
 
-import keyboard
 from pick import pick
 from tabulate import tabulate
 
@@ -33,7 +32,7 @@ else:
 
 # ------------------------=[UTILS]=------------------------
 
-def saveToFile(name: str): #TODO: Agregar Save por órden alfabético.
+def saveToFile(name: str):
     if name == 'data':
         with open("data/data.json", 'w') as file:
             json.dump(carList, file, indent=4)
