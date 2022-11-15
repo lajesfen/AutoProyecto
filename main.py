@@ -1,12 +1,12 @@
 import json
 import os
 
+import keyboard
 from pick import pick
 from tabulate import tabulate
 
 carList = []
 soldList = []
-moneyTotal = 0
 
 class Car:
     def __init__(self, brand: str, year: int, color: str, price: int):
@@ -33,9 +33,14 @@ else:
 
 # ------------------------=[UTILS]=------------------------
 
-def saveToFile(): #TODO: Agregar Save por órden alfabético.
-    with open("data/data.json", 'w') as file:
-        json.dump(carList, file, indent=4)
+def saveToFile(name: str): #TODO: Agregar Save por órden alfabético.
+    if name == 'data':
+        with open("data/data.json", 'w') as file:
+            json.dump(carList, file, indent=4)
+    elif name == 'sold':
+        with open("data/sold.json", 'w') as file:
+            json.dump(soldList, file, indent=4)
+    
 
 def findCar(brand: str, year: int, color: str, price: int):
     for i in carList:       
@@ -45,8 +50,20 @@ def findCar(brand: str, year: int, color: str, price: int):
             continue
     return False
 
-def buyCar(car): #TODO: Función Buy Car: Prices a moneyTotal y carros vendidos a soldList.
-    return
+def buyCar(car):  
+    car['available'] = "Vendido"
+    
+    print('\n                 ▄▀▄▀▄▀ AUTOS DISPONIBLES ▀▄▀▄▀▄')
+    print(tabulate(carList, headers={"brand": "Marca", "year": "Año de Fabric.", "color": "Color", "price": "Precio", "available": "Disponible"}, tablefmt='fancy_grid', showindex=range(1, len(carList)+1)))
+    
+    soldList.append(car)
+    saveToFile('sold')
+
+    for i in carList:
+        if i['available'] == "Vendido":
+            carList.pop(carList.index(i))
+    saveToFile('data')
+    addReturn()
        
 def addReturn():
     button = input("Presiona ENTER para volver.")
@@ -68,29 +85,24 @@ def sendCarRegistry():
         if price >= 0:
             newCar = Car(brand, year, color, price)
             carList.append(newCar.__dict__)
-            saveToFile()
-            sendCarList(False)
+            saveToFile('data')
+            sendCarList()
             break
         else:
             price = int(input("Precio (s/.): "))
 
-
-def sendCarList(delete: bool):
+def sendCarList():
     os.system('cls')
+    orderList = sorted(carList, key=lambda dictionary: dictionary['brand'])
+
     print('\n                 ▄▀▄▀▄▀ AUTOS DISPONIBLES ▀▄▀▄▀▄')
-    print(tabulate(carList, headers={"brand": "Marca", "year": "Año de Fabric.", "color": "Color", "price": "Precio", "available": "Disponible"}, tablefmt='fancy_grid', showindex=range(1, len(carList)+1)))
-    
-    if delete:   
-        for i in carList:
-            if i['available'] == "Vendido":
-                carList.pop(carList.index(i))
-        saveToFile()
+    print(tabulate(orderList, headers={"brand": "Marca", "year": "Año de Fabric.", "color": "Color", "price": "Precio", "available": "Disponible"}, tablefmt='fancy_grid', showindex=range(1, len(carList)+1)))
     addReturn()
 
-
 def sendBuyCar():
+    os.system('cls')
     print('\n                 ▄▀▄▀▄▀ AUTOS DISPONIBLES ▀▄▀▄▀▄')
-    print(tabulate(carList, headers={"brand": "Marca", "year": "Año de Fabric.", "color": "Color", "price": "Precio", "available": "Disponible"}, tablefmt='fancy_grid', showindex=range(1, len(carList)+1)))
+    print(tabulate(sorted(carList, key=lambda dictionary: dictionary['brand']), headers={"brand": "Marca", "year": "Año de Fabric.", "color": "Color", "price": "Precio", "available": "Disponible"}, tablefmt='fancy_grid', showindex=range(1, len(carList)+1)))
     
     print('\n                 ▄▀▄▀▄▀ COMPRAR AUTO ▀▄▀▄▀▄')
     brand = str(input("Marca: "))
@@ -100,9 +112,8 @@ def sendBuyCar():
     
     car = findCar(brand, year, color, price)
     while True:
-        if(car): #TODO: Función Buy Car: Prices a moneyTotal y carros vendidos a soldList.
-            car['available'] = "Vendido"
-            sendCarList(True)
+        if(car):
+            buyCar(car)
             break
         else:
             print('\n                 ▄▀▄▀▄▀ COMPRAR AUTO ▀▄▀▄▀▄')
@@ -113,11 +124,24 @@ def sendBuyCar():
             
             car = findCar(brand, year, color, price)
 
-def sendSoldList(): #TODO
-    return
+def sendSoldList():
+    os.system('cls')
+    orderList = sorted(soldList, key=lambda dictionary: dictionary['brand'])
 
-def sendMoneyTotal(): #TODO
-    return
+    print('\n                 ▄▀▄▀▄▀ AUTOS VENDIDOS ▀▄▀▄▀▄')
+    print(tabulate(orderList, headers={"brand": "Marca", "year": "Año de Fabric.", "color": "Color", "price": "Precio", "available": "Disponible"}, tablefmt='fancy_grid', showindex=range(1, len(soldList)+1)))
+    addReturn()
+
+def sendMoneyTotal():
+    os.system('cls')
+    moneyTotal = 0
+
+    for i in soldList:
+        moneyTotal += i['price']
+    
+    print('\n                 ▄▀▄▀▄▀ GANANCIAS POR VENTAS ▀▄▀▄▀▄', end="")
+    print('\n                            S/. ' + str(moneyTotal))
+    addReturn()
 
 def sendMainMenu():
     title = '                 ▄▀▄▀▄▀ VENTA AUTOS ▀▄▀▄▀▄'
@@ -135,7 +159,11 @@ def init():
         case 0:
             sendCarRegistry()
         case 1:
-            sendCarList(False)
+            sendCarList()
         case 2:
             sendBuyCar()
+        case 3:
+            sendSoldList()
+        case 4:
+            sendMoneyTotal()
 init()

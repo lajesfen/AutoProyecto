@@ -1,0 +1,23 @@
+[
+    {
+        "brand": "Audi",
+        "year": 2010,
+        "color": "Negro",
+        "price": 4210,
+        "available": "Vendido"
+    },
+    {
+        "brand": "Nissan",
+        "year": 1998,
+        "color": "Morado",
+        "price": 3210,
+        "available": "Vendido"
+    },
+    {
+        "brand": "BMW",
+        "year": 2010,
+        "color": "Morado",
+        "price": 1200,
+        "available": "Vendido"
+    }
+]
