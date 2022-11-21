@@ -1,12 +1,5 @@
 [
     {
-        "brand": "Audi",
-        "year": 2010,
-        "color": "Negro",
-        "price": 4210,
-        "available": "Vendido"
-    },
-    {
         "brand": "Nissan",
         "year": 1998,
         "color": "Morado",
@@ -18,6 +11,13 @@
         "year": 2010,
         "color": "Morado",
         "price": 1200,
+        "available": "Vendido"
+    },
+    {
+        "brand": "Audi",
+        "year": 2020,
+        "color": "Negro",
+        "price": 12300,
         "available": "Vendido"
     }
 ]

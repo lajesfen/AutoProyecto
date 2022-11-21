@@ -5,12 +5,5 @@
         "color": "Negro",
         "price": 4210,
         "available": "Disponible"
-    },
-    {
-        "brand": "Audi",
-        "year": 2020,
-        "color": "Negro",
-        "price": 12300,
-        "available": "Disponible"
     }
 ]
